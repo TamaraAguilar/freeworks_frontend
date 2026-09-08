@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h3>Agregar Nuevo Entregable</h3>
+  <form [formGroup]="deliverableForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Título del Entregable</mat-label>
+      <input matInput formControlName="title" placeholder="Ej: Diseño de Base de Datos">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de Entrega</mat-label>
+      <input matInput type="date" formControlName="due_date">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>URL del Archivo (Simulado)</mat-label>
+      <input matInput formControlName="simulated_file" placeholder="https://github.com/...">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="deliverableForm.invalid">
+      Guardar Entregable
+    </button>
+  </form>
+</div>

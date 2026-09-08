@@ -1,1 +1,35 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+  <h2 class="mb-4">Panel de Control FreeWorks</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Total Proyectos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2 class="text-primary display-4">{{ totalProjects }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>En Progreso</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2 class="text-warning display-4">{{ activeProjects }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-4">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Atrasados</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h2 class="text-danger display-4">{{ delayedProjects }}</h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
