@@ -1,0 +1,38 @@
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">Registrar Nuevo Proyecto</h2>
+  
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre del Proyecto</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Pasarela de Pagos">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cliente</mat-label>
+      <input matInput formControlName="client" placeholder="Ej: Empresa SPA">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Progreso">En progreso</mat-option>
+        <mat-option value="Finalizado">Finalizado</mat-option>
+        <mat-option value="Atrasado">Atrasado</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Prioridad</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="Alta">Alta</mat-option>
+        <mat-option value="Media">Media</mat-option>
+        <mat-option value="Baja">Baja</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="projectForm.invalid">
+      Guardar Proyecto
+    </button>
+  </form>
+</div>

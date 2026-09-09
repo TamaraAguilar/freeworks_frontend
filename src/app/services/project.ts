@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Service()
 export class Project {
   private apiUrl = 'http://localhost:8000/api/projects/';
-  
+
   private http = inject(HttpClient);
 
   getProjects(): Observable<any[]> {
@@ -14,5 +14,9 @@ export class Project {
 
   updateProjectStatus(id: number, status: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}${id}/`, { status });
+  }
+
+  createProject(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data);
   }
 }
