@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Project } from '../../services/project';
+import { CommentModal } from '../comment-modal/comment-modal';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-project-list',
@@ -27,7 +29,8 @@ import { Project } from '../../services/project';
 })
 export class ProjectList implements OnInit {
   projects: any[] = [];
-  displayedColumns: string[] = ['name', 'client', 'status', 'progress'];
+  displayedColumns: string[] = ['name', 'client', 'status', 'priority', 'progress', 'actions'];
+  private dialog = inject(MatDialog);
 
   searchTerm: string = '';
   selectedStatus: string = '';
@@ -63,6 +66,12 @@ export class ProjectList implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error actualizando estado:', err),
+    });
+  }
+
+  openComments(project: any) {
+    this.dialog.open(CommentModal, {
+      data: { project },
     });
   }
 }

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Comentarios: {{ project.name }}</h2>
+
+<mat-dialog-content class="d-flex flex-column gap-3" style="min-width: 400px">
+  <div class="border rounded p-2 bg-light" style="max-height: 200px; overflow-y: auto">
+    @if (comments.length > 0) {
+      @for (c of comments; track c.id) {
+        <div class="mb-2 border-bottom pb-1">
+          <p class="mb-1">{{ c.text }}</p>
+          <small class="text-muted">{{ c.created_at | date: 'short' }}</small>
+        </div>
+      }
+    } @else {
+      <p class="text-muted text-center my-2">No hay comentarios registrados para este proyecto.</p>
+    }
+  </div>
+
+  <!-- Formulario para agregar un nuevo comentario -->
+  <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="d-flex flex-column gap-2 mt-2">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Escribe un comentario...</mat-label>
+      <textarea matInput formControlName="text" rows="2"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">
+      Agregar Comentario
+    </button>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

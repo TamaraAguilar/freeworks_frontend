@@ -77,32 +77,25 @@
 
       <!-- Cambiar Estado -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Cambiar Estado</th>
-        <td mat-cell *matCellDef="let p" class="d-flex gap-1 align-items-center py-2">
-          <button
-            mat-stroked-button
-            color="primary"
-            size="small"
-            (click)="changeStatus(p, 'Progreso')"
-          >
-            Progreso
-          </button>
-          <button
-            mat-stroked-button
-            color="accent"
-            size="small"
-            (click)="changeStatus(p, 'Finalizado')"
-          >
-            Finalizar
-          </button>
-          <button
-            mat-stroked-button
-            color="warn"
-            size="small"
-            (click)="changeStatus(p, 'Atrasado')"
-          >
-            Atrasar
-          </button>
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let p" class="py-2">
+          <div class="d-flex gap-1 align-items-center flex-wrap">
+            <!-- Botones de Cambio de Estado -->
+            <!-- <button mat-stroked-button color="primary" (click)="changeStatus(p, 'Progreso')">
+              Progreso
+            </button> -->
+            <button mat-stroked-button color="accent" (click)="changeStatus(p, 'Finalizado')">
+              Finalizar
+            </button>
+            <!-- <button mat-stroked-button color="warn" (click)="changeStatus(p, 'Atrasado')">
+              Atrasar
+            </button> -->
+
+            <!-- Botón para Abrir el Modal de Comentarios -->
+            <button mat-flat-button color="primary" (click)="openComments(p)">
+              Comentarios ({{ p.comments ? p.comments.length : 0 }})
+            </button>
+          </div>
         </td>
       </ng-container>
 

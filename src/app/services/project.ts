@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 @Service()
 export class Project {
   private apiUrl = 'http://localhost:8000/api/projects/';
+  private commentUrl = 'http://localhost:8000/api/comments/';
 
   private http = inject(HttpClient);
 
