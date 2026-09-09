@@ -1,42 +1,113 @@
 <div class="container mt-4">
+  <h2>Gestión y Listado de Proyectos</h2>
+
+  <!-- Barra de Filtros y Búsqueda -->
+  <div class="row my-3 g-2">
+    <div class="col-md-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Buscar por proyecto o entregable</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="loadProjects()" placeholder="Nombre..." />
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Filtrar por Estado</mat-label>
+        <mat-select [(ngModel)]="selectedStatus" (selectionChange)="loadProjects()">
+          <mat-option value="">Todos</mat-option>
+          <mat-option value="Progreso">En progreso</mat-option>
+          <mat-option value="Finalizado">Finalizado</mat-option>
+          <mat-option value="Atrasado">Atrasado</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Filtrar por Prioridad</mat-label>
+        <mat-select [(ngModel)]="selectedPriority" (selectionChange)="loadProjects()">
+          <mat-option value="">Todas</mat-option>
+          <mat-option value="Alta">Alta</mat-option>
+          <mat-option value="Media">Media</mat-option>
+          <mat-option value="Baja">Baja</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Tabla de Proyectos -->
   <div class="mat-elevation-z8 mb-4">
     <table mat-table [dataSource]="projects" class="w-100">
-
-      <!-- Proyecto -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Proyecto </th>
-        <td mat-cell *matCellDef="let project"> {{project.name}} </td>
+        <th mat-header-cell *matHeaderCellDef>Proyecto</th>
+        <td mat-cell *matCellDef="let p">{{ p.name }}</td>
       </ng-container>
 
-      <!-- Cliente -->
       <ng-container matColumnDef="client">
-        <th mat-header-cell *matHeaderCellDef> Cliente </th>
-        <td mat-cell *matCellDef="let project"> {{project.client}} </td>
+        <th mat-header-cell *matHeaderCellDef>Cliente</th>
+        <td mat-cell *matCellDef="let p">{{ p.client }}</td>
       </ng-container>
 
-      <!-- Estado -->
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef> Estado </th>
-        <td mat-cell *matCellDef="let project">
-          <span class="badge" 
-                [ngClass]="{'bg-success': project.status === 'Finalizado', 
-                            'bg-warning': project.status === 'Progreso', 
-                            'bg-danger': project.status === 'Atrasado'}">
-            {{project.status}}
+        <th mat-header-cell *matHeaderCellDef>Estado Actual</th>
+        <td mat-cell *matCellDef="let p">
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-success': p.status === 'Finalizado',
+              'bg-warning text-dark': p.status === 'Progreso',
+              'bg-danger': p.status === 'Atrasado',
+            }"
+          >
+            {{ p.status }}
           </span>
         </td>
       </ng-container>
 
-      <!-- Progreso -->
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef>Prioridad</th>
+        <td mat-cell *matCellDef="let p">{{ p.priority }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="progress">
-        <th mat-header-cell *matHeaderCellDef> Progreso </th>
-        <td mat-cell *matCellDef="let project">
-          <mat-progress-bar mode="determinate" [value]="project.progress"></mat-progress-bar>
+        <th mat-header-cell *matHeaderCellDef>Progreso</th>
+        <td mat-cell *matCellDef="let p">
+          <mat-progress-bar mode="determinate" [value]="p.progress"></mat-progress-bar>
+          <small>{{ p.progress }}%</small>
+        </td>
+      </ng-container>
+
+      <!-- Cambiar Estado -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Cambiar Estado</th>
+        <td mat-cell *matCellDef="let p" class="d-flex gap-1 align-items-center py-2">
+          <button
+            mat-stroked-button
+            color="primary"
+            size="small"
+            (click)="changeStatus(p, 'Progreso')"
+          >
+            Progreso
+          </button>
+          <button
+            mat-stroked-button
+            color="accent"
+            size="small"
+            (click)="changeStatus(p, 'Finalizado')"
+          >
+            Finalizar
+          </button>
+          <button
+            mat-stroked-button
+            color="warn"
+            size="small"
+            (click)="changeStatus(p, 'Atrasado')"
+          >
+            Atrasar
+          </button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
 </div>

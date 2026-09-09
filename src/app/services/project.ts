@@ -1,5 +1,5 @@
 import { inject, Service } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Service()
@@ -8,15 +8,30 @@ export class Project {
 
   private http = inject(HttpClient);
 
-  getProjects(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getProjects(filters?: {
+    search?: string;
+    client?: string;
+    status?: string;
+    priority?: string;
+  }): Observable<any[]> {
+    let params = new HttpParams();
+    if (filters?.search) params = params.set('search', filters.search);
+    if (filters?.client) params = params.set('client', filters.client);
+    if (filters?.status) params = params.set('status', filters.status);
+    if (filters?.priority) params = params.set('priority', filters.priority);
+
+    return this.http.get<any[]>(this.apiUrl, { params });
+  }
+
+  createProject(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data);
   }
 
   updateProjectStatus(id: number, status: string): Observable<any> {
     return this.http.patch(`${this.apiUrl}${id}/`, { status });
   }
 
-  createProject(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, data);
+  addComment(projectId: number, text: string): Observable<any> {
+    return this.http.post<any>(this.commentUrl, { project: projectId, text });
   }
 }
